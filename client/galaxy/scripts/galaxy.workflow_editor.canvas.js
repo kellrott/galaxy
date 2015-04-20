@@ -176,7 +176,7 @@ var Terminal = Backbone.Model.extend( {
     },
     redraw: function () {
         $.each( this.connectors, function( _, c ) {
-            c.redraw();  
+            c.redraw();
         });
     },
     destroy: function () {
@@ -398,7 +398,7 @@ var InputTerminal = BaseInputTerminal.extend( {
     update: function( input ) {
         this.datatypes = input.extensions;
         this.multiple = input.multiple;
-        this.collection = false;    	
+        this.collection = false;
     },
     connect: function( connector ) {
         BaseInputTerminal.prototype.connect.call( this, connector );
@@ -564,7 +564,7 @@ $.extend( Connector.prototype, {
     destroyIfInvalid: function() {
         if( this.handle1 && this.handle2 && ! this.handle2.attachable( this.handle1 ) ) {
             this.destroy();
-        }        
+        }
     },
     redraw : function () {
         var canvas_container = $("#canvas-container");
@@ -641,7 +641,7 @@ $.extend( Connector.prototype, {
                 inner_width = 1;
                 outer_width = 3;
             }
-            connector.draw_outlined_curve( start_x, start_y, end_x, end_y, cp_shift, inner_width, outer_width, start_offsets[ i % start_offsets.length ], end_offsets[ i % end_offsets.length ] ); 
+            connector.draw_outlined_curve( start_x, start_y, end_x, end_y, cp_shift, inner_width, outer_width, start_offsets[ i % start_offsets.length ], end_offsets[ i % end_offsets.length ] );
         }
     },
     draw_outlined_curve : function( start_x, start_y, end_x, end_y, cp_shift, inner_width, outer_width, offset_start, offset_end ) {
@@ -683,7 +683,7 @@ var Node = Backbone.Model.extend({
                 connectedTerminals.push( t );
             }
         } );
-        return connectedTerminals;        
+        return connectedTerminals;
     },
     hasConnectedOutputTerminals: function() {
         // return this.connectedOutputTerminals().length > 0; <- optimized this
@@ -783,6 +783,7 @@ var Node = Backbone.Model.extend({
         this.tool_errors = data.tool_errors;
         this.tooltip = data.tooltip ? data.tooltip : "";
         this.annotation = data.annotation;
+        this.label = data.label;
         this.post_job_actions = data.post_job_actions ? data.post_job_actions : {};
         this.label = data.label;
         this.uuid = data.uuid;
@@ -971,8 +972,8 @@ $.extend( Workflow.prototype, {
             if (node.post_job_actions){
                 $.each( node.post_job_actions, function ( i, act ) {
                     var pja = {
-                        action_type : act.action_type, 
-                        output_name : act.output_name, 
+                        action_type : act.action_type,
+                        output_name : act.output_name,
                         action_arguments : act.action_arguments
                     }
                     post_job_actions[ act.action_type + act.output_name ] = null;
@@ -1143,7 +1144,7 @@ $.extend( Workflow.prototype, {
                 if ( n_pred[ pred_k ] == 0 ) {
                     level_parents.push( pred_k );
                 }
-            }        
+            }
             if ( level_parents.length == 0 ) {
                 break;
             }
@@ -1165,7 +1166,7 @@ $.extend( Workflow.prototype, {
         // Layout each level
         var all_nodes = this.nodes;
         var h_pad = 80; v_pad = 30;
-        var left = h_pad;        
+        var left = h_pad;
         $.each( node_ids_by_level, function( i, ids ) {
             // We keep nodes in the same order in a level to give the user
             // some control over ordering
@@ -1242,11 +1243,11 @@ function fix_delta( x, n ) {
     }
     return 0;
 }
-    
+
 function round_up( x, n ) {
     return Math.ceil( x / n ) * n;
 }
-     
+
 function prebuild_node( type, title_text, tool_id ) {
     var f = $("<div class='toolForm toolFormInCanvas'></div>");
     var node = new Node( { element: f } );
@@ -1256,7 +1257,7 @@ function prebuild_node( type, title_text, tool_id ) {
     }
     var title = $("<div class='toolFormTitle unselectable'>" + title_text + "</div>" );
     f.append( title );
-    f.css( "left", $(window).scrollLeft() + 20 ); f.css( "top", $(window).scrollTop() + 20 );    
+    f.css( "left", $(window).scrollLeft() + 20 ); f.css( "top", $(window).scrollTop() + 20 );
     var b = $("<div class='toolFormBody'></div>");
     var tmp = "<div><img height='16' align='middle' src='" + galaxy_config.root + "static/images/loading_small_white_bg.gif'/> loading tool info...</div>";
     b.append( tmp );
@@ -1286,7 +1287,7 @@ function prebuild_node( type, title_text, tool_id ) {
         workflow.fit_canvas_to_nodes();
         canvas_manager.draw_overview();
     }).bind( "dragclickonly", function() {
-       workflow.activate_node( node ); 
+       workflow.activate_node( node );
     }).bind( "drag", function( e, d ) {
         // Move
         var po = $(this).offsetParent().offset(),
@@ -1309,7 +1310,7 @@ function add_node( type, title_text, tool_id ) {
     workflow.add_node( node );
     workflow.fit_canvas_to_nodes();
     canvas_manager.draw_overview();
-    workflow.activate_node( node );    
+    workflow.activate_node( node );
     return node;
 }
 
@@ -1387,7 +1388,7 @@ var NodeView = Backbone.View.extend( {
             terminalView = new terminalViewClass( {
                 node: this.node,
                 input: input
-            } );             
+            } );
         } else {
             var terminal = terminalView.el.terminal;
             terminal.update( input );
@@ -1397,7 +1398,7 @@ var NodeView = Backbone.View.extend( {
         var terminalElement = terminalView.el;
         var inputView = new DataInputView( {
             terminalElement: terminalElement,
-            input: input, 
+            input: input,
             nodeView: this,
             skipResize: skipResize
         } );
@@ -1487,7 +1488,7 @@ var OutputCalloutView = Backbone.View.extend( {
                         canvas_manager.draw_overview();
                     })))
             .tooltip({delay:500, title: "Mark dataset as a workflow output. All unmarked datasets will be hidden." });
-        
+
         this.$el.css({
                 top: '50%',
                 margin:'-8px 0px 0px 0px',
@@ -1611,19 +1612,19 @@ var BaseInputTerminalView = TerminalView.extend( {
     },
 
     onDropStart: function( e, d  ) {
-        if (d.proxy.terminal) { 
+        if (d.proxy.terminal) {
             d.proxy.terminal.connectors[0].inner_color = "#BBFFBB";
         }
     },
 
     onDropEnd: function ( e, d ) {
-        if (d.proxy.terminal) { 
+        if (d.proxy.terminal) {
             d.proxy.terminal.connectors[0].inner_color = "#FFFFFF";
         }
     },
 
     onDrop: function( e, d ) {
-        var terminal = this.el.terminal;        
+        var terminal = this.el.terminal;
         new Connector( d.drag.terminal, terminal ).redraw();
     },
 
@@ -1717,10 +1718,10 @@ var BaseOutputTerminalView = TerminalView.extend( {
         $("#canvas-container").get(0).scroll_panel.test( e, onmove );
     },
 
-    onDragStart: function( e, d ) { 
+    onDragStart: function( e, d ) {
         $( d.available ).addClass( "input-terminal-active" );
         // Save PJAs in the case of change datatype actions.
-        workflow.check_changes_in_active_form(); 
+        workflow.check_changes_in_active_form();
         // Drag proxy div
         var h = $( '<div class="drag-terminal" style="position: absolute;"></div>' )
             .appendTo( "#canvas-container" ).get(0);
@@ -1918,11 +1919,11 @@ $.extend( CanvasManager.prototype, {
             });
             self.draw_overview();
         });
-        
+
         /*  Disable dragging for child element of the panel so that resizing can
             only be done by dragging the borders */
         $("#overview-border div").bind("drag", function() { });
-        
+
     },
     update_viewport_overlay: function() {
         var cc = this.cc,
@@ -1933,7 +1934,7 @@ $.extend( CanvasManager.prototype, {
             in_h = cc.height(),
             o_w = oc.width(),
             o_h = oc.height(),
-            cc_pos = cc.position();        
+            cc_pos = cc.position();
         ov.css( {
             left: - ( cc_pos.left / in_w * o_w ),
             top: - ( cc_pos.top / in_h * o_h ),

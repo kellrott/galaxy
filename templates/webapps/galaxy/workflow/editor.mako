@@ -36,7 +36,7 @@
         %if util.string_as_bool(trans.app.config.get('workflow_toolform_upgrade',  False)):
         __NEWTOOLFORM__ = true;
         %endif
-        
+
         // Globals
         workflow = null;
         canvas_manager = null;
@@ -432,7 +432,7 @@
                 </div>
                 ## Workflow annotation.
                 ## Annotation elt.
-                <div id="workflow-annotation-area" class="form-row">
+                <div id="workflow-annotation-area" class="form-row" testing="true">
                     <label>Annotation / Notes:</label>
                     <div id="workflow-annotation" class="editable-text" title="Click to edit annotation">
                     %if annotation:
@@ -443,6 +443,19 @@
                     </div>
                     <div class="toolParamHelp">Add an annotation or notes to a workflow; annotations are available when a workflow is viewed.</div>
                 </div>
+                ## Workflow label.
+                ## label elt.
+                <div id="workflow-label-area" class="form-row">
+                    <label>Step label:</label>
+                    <div id="workflow-label" class="editable-text" title="Click to edit label">
+                    %if label:
+                        ${h.to_unicode( label ) | h}
+                    %else:
+                        <em>Label to identify step</em>
+                    %endif
+                    </div>
+                </div>
+
             </div>
         </div>
 
