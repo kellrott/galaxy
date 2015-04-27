@@ -460,6 +460,13 @@ function show_form_for_tool( text, node ) {
                         <div class='toolParamHelp'>Add an annotation or notes to this step; annotations are available when a workflow is viewed.</div> \
                     </div> \
             </div> \
+            <div class='form-row'> \
+            <label>Step label:</label> \
+                  <div style='margin-right: 10px;'> \
+                  <textarea name='label' style='width: 100%'>" + node.label + "</textarea> \
+                        <div class='toolParamHelp'>Set unique step label</div> \
+                  </div> \
+            </div> \
             </div>" );
     }
     // Add step actions.
